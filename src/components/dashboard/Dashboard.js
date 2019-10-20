@@ -25,14 +25,14 @@ class Dashboard extends Component {
             .catch(this.catchError);
     }
 
-    handleDeleteTodo = (e) => {
-        const id = e.target.id
-        console.log('e', e)
-        console.log('id', id)
+    handleDeleteTodo = (id) => {
+        // const id = e.target.id
+        // console.log('e', e)
+        // console.log('id', id)
         fetch('http://localhost:8088/api/todo/' + id, {
             method: 'DELETE',
             headers: {
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNTcxNTcyNjQ5LCJleHAiOjE1NzE2NTkwNDl9._pFJLy7qHJChWfm_tkopwoG-qOltQ5UUGsumIi6nz5A'
+                Authorization: 'Bearer ' + this.props.jwt
             }
         })
             .then(res => {
@@ -51,9 +51,9 @@ class Dashboard extends Component {
             .catch(this.catchError);
     }
 
-    handleCheckUncheck = () => {
-        const id = this.props.todo.id
-        fetch('http://localhost:8088/api/check/' + id, {
+    handleCheckUncheck = (id) => {
+        // const id = this.props.todo.id
+        fetch('http://localhost:8088/api/todo/check/' + id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -104,10 +104,10 @@ class Dashboard extends Component {
                                             <i className="material-icons left">edit</i>
                                         </Link>
                                     </div>
-                                    <div id={todo.id} className="btn-floating waves-effect waves-light btn red lighten-1" onClick={this.handleDeleteTodo}>
+                                    <div className="btn-floating waves-effect waves-light btn red lighten-1" onClick={() => { this.handleDeleteTodo(todo.id) }}>
                                         <i className="material-icons left">delete</i>
                                     </div>
-                                    <div className="right btn-floating halfway waves-effect waves-light red">
+                                    <div className="right btn-floating halfway waves-effect waves-light red" onClick={() => { this.handleCheckUncheck(todo.id) }}>
                                         <i className="material-icons left">check</i>
                                     </div>
                                 </div>
