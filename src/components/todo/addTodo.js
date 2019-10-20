@@ -12,7 +12,7 @@ class addTodo extends Component {
             }),
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNTcxNTcyNjQ5LCJleHAiOjE1NzE2NTkwNDl9._pFJLy7qHJChWfm_tkopwoG-qOltQ5UUGsumIi6nz5A'
+                Authorization: 'Bearer ' + this.props.jwt
             }
         })
             .then(res => {
@@ -54,7 +54,7 @@ class addTodo extends Component {
                             <label htmlFor="description">Description</label>
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="center row">
                         <button className="btn waves-effect waves-light green lighten-1" onClick={this.handleClick}>ADD TODO
                         <i className="material-icons right ">save</i>
                         </button>
@@ -65,11 +65,16 @@ class addTodo extends Component {
     }
 }
 
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state) => {
     return {
-        addTodo: (todo) => dispatch(addTodoAction(todo))
+        jwt: state.jwt
     }
 }
 
-export default connect(null, mapDispatchToProps)(addTodo)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTodo: (todo) => dispatch(addTodoAction(todo)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(addTodo)

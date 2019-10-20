@@ -11,7 +11,7 @@ class Dashboard extends Component {
     componentDidMount = () => {
         fetch('http://localhost:8088/api/todo/list', {
             headers: {
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNTcxNTcyNjQ5LCJleHAiOjE1NzE2NTkwNDl9._pFJLy7qHJChWfm_tkopwoG-qOltQ5UUGsumIi6nz5A'
+                Authorization: 'Bearer ' + this.props.jwt
             }
         })
             .then(res => {
@@ -105,7 +105,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        todoList: state.todoList
+        todoList: state.todoList,
+        jwt: state.jwt
     }
 }
 

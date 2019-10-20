@@ -1,33 +1,6 @@
 const initState = {
-    todoList: []
-    // todoList: [{
-    //     id: 1,
-    //     title: "Play football 1",
-    //     description: "Play football with my friend",
-    //     checked: false,
-    //     createdAt: "2019-10-18T03:29:20.000Z",
-    //     updatedAt: "2019-10-18T03:29:20.000Z",
-    //     userId: 1
-    // },
-    // {
-    //     id: 2,
-    //     title: "Play football 2",
-    //     description: "Play football with my friend",
-    //     checked: false,
-    //     createdAt: "2019-10-18T03:29:20.000Z",
-    //     updatedAt: "2019-10-18T03:29:20.000Z",
-    //     userId: 1
-    // },
-    // {
-    //     id: 3,
-    //     title: "Play football 3",
-    //     description: "Play football with my friend",
-    //     checked: true,
-    //     createdAt: "2019-10-18T03:29:20.000Z",
-    //     updatedAt: "2019-10-18T03:29:20.000Z",
-    //     userId: 1
-    // }
-    // ]
+    todoList: [],
+    jwt: ''
 }
 
 const rootReducer = (state = initState, action) => {
@@ -56,6 +29,11 @@ const rootReducer = (state = initState, action) => {
         return {
             ...state,
             todoList: action.todoList
+        }
+    } else if (action.type === 'SIGNIN') {
+        return {
+            ...state,
+            jwt: action.jwt
         }
     }
     return state

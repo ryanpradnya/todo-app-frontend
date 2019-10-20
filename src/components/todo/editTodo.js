@@ -13,7 +13,7 @@ class editTodo extends Component {
             }),
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIiwiaWF0IjoxNTcxNTcyNjQ5LCJleHAiOjE1NzE2NTkwNDl9._pFJLy7qHJChWfm_tkopwoG-qOltQ5UUGsumIi6nz5A'
+                Authorization: 'Bearer ' + this.props.jwt
             }
         })
             .then(res => {
@@ -54,7 +54,7 @@ class editTodo extends Component {
                         <label className="active" htmlFor="description">Description</label>
                     </div>
                 </div>
-                <div className="row">
+                <div className="center row">
                     <button className="btn waves-effect waves-light green lighten-1" onClick={this.handleClick}>Save
                         <i className="material-icons right ">save</i>
                     </button>
@@ -74,7 +74,8 @@ class editTodo extends Component {
 const mapStateToProps = (state, ownProps) => {
     let id = ownProps.match.params.todoId;
     return {
-        todo: state.todoList.find(todo => todo.id.toString() === id.toString())
+        todo: state.todoList.find(todo => todo.id.toString() === id.toString()),
+        jwt: state.jwt
     }
 }
 
