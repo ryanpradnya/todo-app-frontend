@@ -31,25 +31,28 @@ const initState = {
 }
 
 const rootReducer = (state = initState, action) => {
-
+    console.log('action rootReducer', action)
     if (action.type === 'EDIT_TODO') {
         const updateTodoList = [...state.todoList]
-        const updateTodoIndex = updateTodoList.findIndex(todo => todo.id.toString() === action.id.toString());
-        const currentTodo = updateTodoList[updateTodoIndex]
-        const updateTodo = {
-            id: currentTodo['id'],
-            title: currentTodo['title'] + 'edit',
-            checked: currentTodo['checked'],
-            userId: 1
-        }
-        updateTodoList[updateTodoIndex] = updateTodo;
+        const updateTodoIndex = updateTodoList.findIndex(todo => todo.id.toString() === action.todo.id.toString());
+        updateTodoList[updateTodoIndex] = action.todo;
 
         return {
             ...state,
             todoList: updateTodoList
         }
     } else if (action.type === 'FETCH_TODO') {
-        console.log('action.todoList', action.todoList)
+        return {
+            ...state,
+            todoList: action.todoList
+        }
+    } else if (action.type === 'ADD_TODO') {
+        const addTodoList = [...state.todoList, action.todo]
+        return {
+            ...state,
+            todoList: addTodoList
+        }
+    } else if (action.type === 'DELETE_TODO') {
         return {
             ...state,
             todoList: action.todoList
