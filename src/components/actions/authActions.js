@@ -4,3 +4,9 @@ export const signinAction = (jwt) => {
         jwt
     }
 }
+
+export const signoutAction = () => {
+    return {
+        type: 'SIGNOUT'
+    }
+}

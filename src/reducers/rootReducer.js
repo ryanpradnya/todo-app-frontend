@@ -1,5 +1,6 @@
 const initState = {
     todoList: [],
+    isLoggedIn: false,
     jwt: ''
 }
 
@@ -33,7 +34,17 @@ const rootReducer = (state = initState, action) => {
     } else if (action.type === 'SIGNIN') {
         return {
             ...state,
-            jwt: action.jwt
+            jwt: action.jwt,
+            isLoggedIn: true
+
+        }
+    } else if (action.type === 'SIGNOUT') {
+        return {
+            ...state,
+            jwt: '',
+            isLoggedIn: false,
+            todoList: []
+
         }
     }
     return state

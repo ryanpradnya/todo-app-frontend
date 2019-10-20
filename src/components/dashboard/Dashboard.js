@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchTodoAction, deleteTodoAction } from '../actions/todoActions'
 
-// import SignedOutDashboard from './SignedOutDashboard'
-// import SignedInDashboard from './SignedInDashboard'
-// import HikingBackgournd from '../../img/hiking.jpg'
 
 class Dashboard extends Component {
     componentDidMount = () => {
