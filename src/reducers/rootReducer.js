@@ -27,9 +27,21 @@ const rootReducer = (state = initState, action) => {
             todoList: addTodoList
         }
     } else if (action.type === 'DELETE_TODO') {
+        let newtodo = state.todoList.filter(todo => {
+            return todo.id !== action.id
+        });
         return {
             ...state,
-            todoList: action.todoList
+            todoList: newtodo
+        }
+    } else if (action.type === 'CHECK_TODO') {
+        const updateTodoList = [...state.todoList]
+        const updateTodoIndex = updateTodoList.findIndex(todo => todo.id.toString() === action.todo.id.toString());
+        updateTodoList[updateTodoIndex] = action.todo;
+
+        return {
+            ...state,
+            todoList: updateTodoList
         }
     } else if (action.type === 'SIGNIN') {
         return {

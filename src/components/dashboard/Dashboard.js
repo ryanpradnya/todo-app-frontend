@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fetchTodoAction, deleteTodoAction } from '../actions/todoActions'
+import { fetchTodoAction, deleteTodoAction, checkTodoAction } from '../actions/todoActions'
 
 
 class Dashboard extends Component {
@@ -43,7 +43,32 @@ class Dashboard extends Component {
 
                 return res.json();
             }).then(resData => {
-                this.props.deleteTodo(resData.todo);
+                this.props.deleteTodo(id);
+                this.props.history.push('/');
+
+            })
+
+            .catch(this.catchError);
+    }
+
+    handleCheckUncheck = () => {
+        const id = this.props.todo.id
+        fetch('http://localhost:8088/api/check/' + id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + this.props.jwt
+            }
+        })
+            .then(res => {
+                console.log('res', res)
+                if (res.status !== 200 && res.status !== 201) {
+                    throw new Error('Failed to edit todo.');
+                }
+
+                return res.json();
+            }).then(resData => {
+                this.props.checkTodo(resData.todo);
                 this.props.history.push('/');
 
             })
@@ -56,6 +81,13 @@ class Dashboard extends Component {
         const { todoList } = this.props
         const mytodo = todoList.length ? (
             todoList.map(todo => {
+                // const checkButton = todo.checked ? (asdf) :(asdf);
+                console.log('todo.checked', todo.checked)
+                const checkSpan = todo.checked ? (
+                    <span className="right new bedge green white-text"> CHECKED </span>
+                ) : (
+                        <span className="right new bedge red white-text"> UNCHECKED </span>
+                    );
                 return (
                     <div className="row" key={todo.id}>
                         <div className="col s12">
@@ -64,7 +96,7 @@ class Dashboard extends Component {
                                 <div className="card-content blue lighten-3 ">
                                     <span className="card-title">{todo.title}</span>
                                     <p>{todo.description}</p>
-                                    <span className="right new bedge red white-text"> UNCHECKED </span>
+                                    {checkSpan}
                                 </div>
                                 <div className="card-action blue lighten-5">
                                     <div className="col s1">
@@ -110,7 +142,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchTodo: (todoList) => dispatch(fetchTodoAction(todoList)),
-        deleteTodo: (todo) => dispatch(deleteTodoAction(todo))
+        deleteTodo: (id) => dispatch(deleteTodoAction(id)),
+        checkTodo: (todo) => dispatch(checkTodoAction(todo))
     }
 }
 

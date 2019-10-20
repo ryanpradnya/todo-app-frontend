@@ -19,9 +19,16 @@ export const fetchTodoAction = (todoList) => {
     }
 }
 
-export const deleteTodoAction = (todo) => {
+export const deleteTodoAction = (id) => {
     return {
         type: 'DELETE_TODO',
+        id
+    }
+}
+
+export const checkTodoAction = (todo) => {
+    return {
+        type: 'CHECK_TODO',
         todo
     }
 }
